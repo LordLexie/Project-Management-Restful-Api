@@ -12,5 +12,12 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Hello World!',
         ]);
+    } 
+    
+    public function store(Request $request)
+    {
+        return response()->json([
+            'message' => 'Hello World!',
+        ]);
     }   
 }
