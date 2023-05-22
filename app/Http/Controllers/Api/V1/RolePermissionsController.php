@@ -10,5 +10,11 @@ use App\Http\Requests\V1\StoreRolePermissionsRequest;
 
 class RolePermissionsController extends Controller
 {
-    //
+    public function store(StoreRolePermissionsRequest $request)
+    {
+        $permission = new RolePermissions();
+        $permission->fill($request->validated())->save();
+
+        return $permission;
+    }
 }
