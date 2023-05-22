@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\RolePermissions;
+
+use App\Http\Resources\RolePermissionsResource;
 use App\Http\Requests\V1\StoreRolePermissionsRequest;
 
 class RolePermissionsController extends Controller
@@ -15,6 +17,6 @@ class RolePermissionsController extends Controller
         $permission = new RolePermissions();
         $permission->fill($request->validated())->save();
 
-        return $permission;
+        return new RolePermissionsResource($permission);
     }
 }
