@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User;
-use App\Http\Resources\UsersResource;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\UserCollection;
 
 use App\Http\Requests\v1\StoreUserRequest;
 use App\Http\Requests\v1\UpdateUserRequest;
@@ -15,12 +16,12 @@ class UserController extends Controller
 {
     public function index()
     {
-       return UsersResource::collection(User::all());    
+       return new UserCollection(User::all());    
     }
 
     public function show(User $user)
     {    
-        return UsersResource::make($user);    
+        return UserResource::make($user);    
     }
 
     public function destroy(User $user)
@@ -36,7 +37,7 @@ class UserController extends Controller
        $user->fill($data)->save();
 
        return response()->json([
-        'data' => new UsersResource($user),
+        'data' => new UserResource($user),
         'message' => 'User created successfully!',            
         ]);
     
@@ -47,7 +48,7 @@ class UserController extends Controller
         $user->update($request->validated());
 
         return response()->json([
-            'data' => new UsersResource($user),
+            'data' => new UserResource($user),
             'message' => 'Role updated successfully!',            
         ]); 
 

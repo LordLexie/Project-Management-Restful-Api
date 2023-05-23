@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\v1;
 
+use App\Models\Role;
 use App\Models\User;
+
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -26,7 +29,7 @@ class UpdateUserRequest extends FormRequest
             'name'=>'string|required|max:100',
             'email'=>'string|required|max:100',
             'password'=>'required',
-            'roles_id'=>'numeric|required',
+            'role_id'=>['numeric','required',Rule::exists(Role::class,'id')],
         ];
     }
 }
