@@ -19,4 +19,5 @@ Route::group(['prefix'=>'v1','namespace'=>'App\Http\Controllers\Api\V1'], functi
     Route::apiResource('users', 'UserController');
     Route::apiResource('roles', 'RoleController');
     Route::apiResource('permissions', 'PermissionController');
+    Route::apiResource('role_permission', 'RolePermissionController');
 }); 
