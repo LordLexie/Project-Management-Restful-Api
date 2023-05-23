@@ -39,4 +39,15 @@ class RolePermissionController extends Controller
         $rolePermission->delete();
         return response()->noContent();
     }
+
+    public function update(RolePermissionRequest $request, RolePermission $rolePermission)
+    {
+        $rolePermission->update($request->validated());
+
+        return response()->json([
+            'data' => new RolePermissionResource($rolePermission),
+            'message' => 'RolePermission updated successfully!',            
+        ]); 
+
+    }
 }
