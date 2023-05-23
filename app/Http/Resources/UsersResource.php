@@ -17,7 +17,7 @@ class UsersResource extends JsonResource
         'id' => $this->id,
         'name' => $this->name,
         'email'=> $this->email,
-        'role'=> $this->role_id,
+        'role'=> is_null($this->role()->first()) ? 'Fucking' : $this->role()->first()->name,
        ];
     }
 }
