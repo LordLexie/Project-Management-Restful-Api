@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 use App\Http\Resources\UserResource;
@@ -33,6 +34,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
        $data = $request->validated();
+       $data['password'] = Hash::make($data['password']);
        $user = new User();
        $user->fill($data)->save();
 
@@ -45,7 +47,9 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $data = $request->validated();
+        $data['password'] = Hash::make($data['password']);
+        $user->update($data);
 
         return response()->json([
             'data' => new UserResource($user),
