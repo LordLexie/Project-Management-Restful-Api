@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 
-use App\Http\Resources\PermissionResource;
+use App\Http\Resources\PermissionCollection;
+use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Log;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 
 
 use App\Models\User;
+use App\Models\Role;
 use App\Models\AuthenticationLog;
 
 use App\Events\UserLogin;
@@ -36,10 +38,19 @@ class LoginController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $abilities = array();
+        $permissions = new PermissionCollection(Role::Find($user->role->id)->permissions()->get());
+        
+        foreach($permissions as $ability)
+        {
+            array_push($abilities, $ability['name']);
+        }
+
+        $token = $user->createToken('auth_token',$abilities)->plainTextToken;
         $log = new AuthenticationLog();
 
         // Dispath the User Login Event
+
         $info = [
             "ip_address"=>$request->ip(),
             "email" => $data['email'],
@@ -47,12 +58,13 @@ class LoginController extends Controller
             "action" => "login",
             "status" => "success",
         ];
-        
+
         UserLogin::dispatch($log,$info);
-    
+        
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'user' => UserResource::make($user),
         ]);
 
     }
