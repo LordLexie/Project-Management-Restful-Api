@@ -3,6 +3,7 @@
 namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use App\Models\User;
 
 class StoreUserRequest extends FormRequest
@@ -26,7 +27,7 @@ class StoreUserRequest extends FormRequest
             'name'=>'string|required|max:100',
             'email'=>'string|required|max:100|unique:Users,email',
             'password'=>'required',
-            'role_id'=>'numeric|required',
+            'role_id'=>['numeric','required',Rules::exists(Role::class,'id')],
         ];
     }
 }
