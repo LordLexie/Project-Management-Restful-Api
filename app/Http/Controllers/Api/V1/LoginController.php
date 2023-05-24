@@ -65,6 +65,7 @@ class LoginController extends Controller
             'access_token' => $token,
             'token_type' => 'Bearer',
             'user' => UserResource::make($user),
+            "message" => "Logged in successfuly"
         ]);
 
     }
