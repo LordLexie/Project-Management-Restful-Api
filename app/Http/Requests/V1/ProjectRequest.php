@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProjectRequest extends FormRequest
 {
@@ -25,6 +26,7 @@ class ProjectRequest extends FormRequest
             'title' => 'required|string',
             'description' => 'nullable|string',
             'location' => 'required|string',
+            'customer_id' => 'required|integer|exists:customers,id',
         ];
     }
 }
