@@ -19,7 +19,7 @@ class RequisitionController extends Controller
      */
     public function index()
     {
-        return new RequisitionCollection(Requisition::paginate());
+        return RequisitionResource::collection(Requisition::paginate());
     }
 
     /**
@@ -48,7 +48,7 @@ class RequisitionController extends Controller
      */
     public function show(Requisition $requisition)
     {
-        //
+        return new RequisitionResource($requisition);
     }
 
     /**
