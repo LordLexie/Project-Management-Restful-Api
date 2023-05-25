@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+
 use App\Http\Requests\V1\RequisitionRequest;
+
+use App\Http\Resources\RequisitionResource;
+use App\Http\Resources\RequisitionCollection;
 
 use App\Models\Requisition;
 use Illuminate\Http\Request;
@@ -15,7 +19,7 @@ class RequisitionController extends Controller
      */
     public function index()
     {
-        //
+        return new RequisitionCollection(Requisition::paginate());
     }
 
     /**
