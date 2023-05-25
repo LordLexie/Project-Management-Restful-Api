@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('address_one')->nullable();
             $table->string('address_two')->nullable();
+            $table->string('organization')->nullable();
             $table->string('folder_id')->nullable();
         });
     }
