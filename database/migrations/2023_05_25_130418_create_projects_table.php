@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->uuid('folder_id')->unique();
+            $table->string('title');
+            $table->string('description')->nullable();
+            $table->string('status')->default('active');
+            $table->string('location');
+            $table->integer('customer_id')->unsigned()->nullable(false);
         });
     }
 
