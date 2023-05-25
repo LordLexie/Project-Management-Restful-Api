@@ -17,33 +17,26 @@ class RequisitionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         //
+        $requisition = new Requisition();
+        $requisition_no = Requisition::count() + 1;
+        $requisition->requisition_no = $requisition_no;
+        $requisition->requisition_title = $request->requisition_title;
+        $requisition->description = $request->has('description') ? $request['description'] : null;
+        $requisition->project_id = $request->project_id;
+        $requisition->author_id = auth::user()->id;
+        $requisition->save();
+        
     }
 
     /**
      * Display the specified resource.
      */
     public function show(Requisition $requisition)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Requisition $requisition)
     {
         //
     }
