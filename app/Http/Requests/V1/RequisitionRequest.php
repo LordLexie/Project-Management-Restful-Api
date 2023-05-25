@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class RequisitionRequest extends FormRequest
 {
@@ -25,7 +26,6 @@ class RequisitionRequest extends FormRequest
             'requisition_title' => 'required|string|max:255',
             'requisition_description' => 'nullable|string',
             'project_id' => 'required|integer|exists:projects,id',
-            'author_id' => 'required|integer|exists:users,id'
         ];
     }
 }

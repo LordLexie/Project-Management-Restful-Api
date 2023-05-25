@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\RequisitionRequest;
+
 use App\Models\Requisition;
 use Illuminate\Http\Request;
 
@@ -19,18 +21,22 @@ class RequisitionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RequisitionRequest $request)
     {
         //
         $requisition = new Requisition();
         $requisition_no = Requisition::count() + 1;
         $requisition->requisition_no = $requisition_no;
         $requisition->requisition_title = $request->requisition_title;
-        $requisition->description = $request->has('description') ? $request['description'] : null;
+        $requisition->requisition_description = $request->has('description') ? $request['description'] : null;
         $requisition->project_id = $request->project_id;
-        $requisition->author_id = auth::user()->id;
+        $requisition->author_id = auth()->user()->id;
         $requisition->save();
         
+        return response()->json([
+            'message' => 'Requisition created successfully',
+            'requisition' => $requisition
+        ], 201);
     }
 
     /**
